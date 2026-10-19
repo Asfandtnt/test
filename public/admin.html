@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230e3b36%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c39a4b%22 font-family=%22Georgia%22>W</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="robots" content="noindex">
+  <title>Admin — Wali Fabrics</title>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand"><span class="brand-name">Wali Fabrics</span><span class="brand-tag">Admin Panel</span></a>
+      <nav class="nav">
+        <a href="index.html" target="_blank">View store ↗</a>
+        <button class="btn btn-outline btn-sm hidden" id="logout">Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container admin-wrap">
+    <div id="notice"></div>
+
+    <!-- Login -->
+    <section class="panel admin-login hidden" id="login-view">
+      <h2 style="color:var(--emerald)">Admin sign in</h2>
+      <form id="login-form">
+        <div class="field"><label for="l-email">Email</label><input id="l-email" type="email" required autocomplete="username"></div>
+        <div class="field"><label for="l-pass">Password</label><input id="l-pass" type="password" required autocomplete="current-password"></div>
+        <button class="btn btn-block" type="submit">Sign in</button>
+        <div id="login-msg"></div>
+      </form>
+    </section>
+
+    <!-- Dashboard -->
+    <section class="hidden" id="dash-view">
+      <div class="stats">
+        <div class="stat"><b id="st-products">0</b><span>Products</span></div>
+        <div class="stat"><b id="st-stock">0</b><span>Out of stock</span></div>
+        <div class="stat"><b id="st-new">0</b><span>New orders</span></div>
+        <div class="stat"><b id="st-sales">Rs. 0</b><span>Delivered sales</span></div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="products">Products</button>
+        <button class="tab" data-tab="orders">Orders</button>
+        <button class="tab" data-tab="settings">Store settings</button>
+      </div>
+
+      <!-- Products tab -->
+      <div data-panel="products" class="admin-grid">
+        <form class="panel" id="product-form">
+          <h3 id="form-title">Add product</h3>
+          <div class="field"><label for="p-name">Product name</label><input id="p-name" required maxlength="120"></div>
+          <div class="grid-2">
+            <div class="field"><label for="p-code">Article code</label><input id="p-code" maxlength="40" placeholder="WF-101"></div>
+            <div class="field"><label for="p-cat">Fabric / category</label><select id="p-cat"></select></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label for="p-pieces">Pieces</label>
+              <select id="p-pieces"><option>3 Piece</option><option>2 Piece</option><option>1 Piece (Shirt)</option><option>Dupatta</option></select>
+            </div>
+            <div class="field"><label for="p-stock">Stock (suits)</label><input id="p-stock" type="number" min="0" step="1" required value="10"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label for="p-price">Price (Rs.)</label><input id="p-price" type="number" min="0" step="1" required></div>
+            <div class="field"><label for="p-sale">Sale price (optional)</label><input id="p-sale" type="number" min="0" step="1"></div>
+          </div>
+          <div class="field"><label for="p-fabric">What's included</label><input id="p-fabric" maxlength="200" placeholder="Lawn shirt, chiffon dupatta, cambric trouser"></div>
+          <div class="field"><label for="p-desc">Description</label><textarea id="p-desc" maxlength="2000" placeholder="Shirt 3.0m · Dupatta 2.5m · Trouser 2.5m"></textarea></div>
+          <div class="field">
+            <label for="p-images">Photos (up to 4 — first is the cover)</label>
+            <input id="p-images" type="file" accept="image/*" multiple>
+            <div class="image-previews" id="previews"></div>
+          </div>
+          <div class="field"><label class="check"><input type="checkbox" id="p-featured"> Show in New Arrivals</label></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" type="submit" id="save-btn">Save product</button>
+            <button class="btn btn-outline hidden" type="button" id="cancel-edit">Cancel</button>
+          </div>
+          <div id="form-msg"></div>
+        </form>
+
+        <div class="panel">
+          <div class="toolbar" style="justify-content:space-between">
+            <h3 style="margin:0">Catalogue</h3>
+            <input type="search" id="p-search" placeholder="Search products…">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+              <tbody id="product-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders tab -->
+      <div data-panel="orders" class="panel hidden">
+        <div class="toolbar" style="justify-content:space-between">
+          <h3 style="margin:0">Orders</h3>
+          <select id="o-filter">
+            <option value="">All statuses</option>
+            <option value="new">New</option><option value="confirmed">Confirmed</option>
+            <option value="shipped">Shipped</option><option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div id="order-list"></div>
+      </div>
+
+      <!-- Settings tab -->
+      <form data-panel="settings" class="panel hidden" id="settings-form" style="max-width:640px">
+        <h3>Store settings</h3>
+        <div class="field"><label for="s-announce">Announcement bar</label><input id="s-announce" maxlength="160"></div>
+        <div class="grid-2">
+          <div class="field"><label for="s-wa">WhatsApp number (with country code)</label><input id="s-wa" placeholder="923001234567"></div>
+          <div class="field"><label for="s-phone">Phone</label><input id="s-phone"></div>
+        </div>
+        <div class="field"><label for="s-email">Email</label><input id="s-email" type="email"></div>
+        <div class="grid-2">
+          <div class="field"><label for="s-fee">Delivery fee (Rs.)</label><input id="s-fee" type="number" min="0"></div>
+          <div class="field"><label for="s-free">Free delivery above (Rs., 0 = never)</label><input id="s-free" type="number" min="0"></div>
+        </div>
+        <button class="btn" type="submit">Save settings</button>
+        <div id="settings-msg"></div>
+      </form>
+    </section>
+  </main>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

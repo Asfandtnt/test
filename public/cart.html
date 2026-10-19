@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230e3b36%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c39a4b%22 font-family=%22Georgia%22>W</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Your Bag — Wali Fabrics</title>
+</head>
+<body>
+  <div id="site-header"></div>
+  <main class="container">
+    <div class="cart-layout">
+      <section class="panel">
+        <h2 style="color:var(--emerald)">Your Bag</h2>
+        <div id="cart-items"></div>
+      </section>
+      <aside class="panel" id="checkout-panel">
+        <h3>Order Summary</h3>
+        <div class="summary-row"><span>Subtotal</span><span id="sum-sub">Rs. 0</span></div>
+        <div class="summary-row"><span>Delivery</span><span id="sum-del">Rs. 0</span></div>
+        <div class="summary-row total"><span>Total</span><span id="sum-total">Rs. 0</span></div>
+
+        <form id="checkout" style="margin-top:20px">
+          <h3>Delivery Details</h3>
+          <div class="field"><label for="c-name">Full name</label><input id="c-name" required maxlength="80"></div>
+          <div class="grid-2">
+            <div class="field"><label for="c-phone">Phone</label><input id="c-phone" type="tel" required maxlength="20" placeholder="03xx xxxxxxx"></div>
+            <div class="field"><label for="c-city">City</label><input id="c-city" required maxlength="50"></div>
+          </div>
+          <div class="field"><label for="c-address">Address</label><textarea id="c-address" required maxlength="300"></textarea></div>
+          <div class="field"><label for="c-notes">Notes (optional)</label><input id="c-notes" maxlength="200"></div>
+          <p style="font-size:.85rem;color:var(--muted)">Payment: <b>Cash on Delivery</b></p>
+          <button class="btn btn-gold btn-block" type="submit" id="place">Place Order</button>
+          <div id="checkout-msg"></div>
+        </form>
+      </aside>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script type="module" src="js/cart.js"></script>
+</body>
+</html>
