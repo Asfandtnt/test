@@ -1,5 +1,7 @@
 # Wali Fabrics
 
+Live at **https://walifabrics.web.app** (admin panel: https://walifabrics.web.app/admin).
+
 An online store for unstitched clothes (lawn, cotton, khaddar, linen, karandi, chiffon and more), with an admin panel. It runs on **Firebase Hosting + Firestore + Firebase Auth** and works on the free Spark plan.
 
 ## Features
@@ -28,7 +30,7 @@ Until Firebase is configured, the site runs in **preview mode** with sample prod
    Then under Users → **Add user**, add the admin's email and password.
 4. **Add a web app**: Project settings → General → Your apps → `</>` (Web).
    Copy the config object into `public/js/firebase-config.js`.
-5. **Set the project ID** in `.firebaserc` (replace `wali-fabrics` with your project ID).
+5. **Set the project ID** in `.firebaserc` (already set to `walifabrics`).
 6. **Install the CLI and deploy**:
    ```bash
    npm install -g firebase-tools
