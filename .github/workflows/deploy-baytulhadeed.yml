@@ -1,0 +1,21 @@
+name: Deploy Baytulhadeed site
+
+on:
+  push:
+    paths:
+      - "baitulhadeed/**"
+      - ".github/workflows/deploy-baytulhadeed.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BAYTULHADEED }}
+          projectId: baytulhadeed
+          channelId: live
+          entryPoint: baitulhadeed
